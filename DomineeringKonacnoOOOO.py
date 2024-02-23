@@ -96,42 +96,6 @@ def kraj(brStanja,koIgra):
             return True
     return False
 
-#stefi git
-    def evaluateState(state, player):
-        if state.findWinner():
-            return Game.oo - 1
-        else:
-            if state.canBothPlayersFinish(True, True):
-                xMinPath = len(min(state.xPaths, key=lambda x: len(x)))
-                oMinPath = len(min(state.oPaths, key=lambda x: len(x)))
-                if player == "X":
-                    return oMinPath + 1 / xMinPath
-                else:
-                    return xMinPath + 1 / oMinPath
-            else:
-                return -Game.oo + 1
-    def maxValue(states, depth, player, alpha, beta):
-        if depth == 0:
-            return (states, Game.evaluateState(states[-1], player))
-        else:
-            for branchState in Game.generateNewStates(states[-1], player):
-                alpha = max(alpha, Game.minValue(states + [branchState], depth - 1, player, alpha, beta), key=lambda x: x[1])
-                if alpha[1] >= beta[1]:
-                    return beta
-        return alpha
-    def minValue(states, depth, player, alpha, beta):
-        if depth == 0:
-            return (states, Game.evaluateState(states[-1], player))
-        else:
-            for branchState in Game.generateNewStates(states[-1], player):
-                beta = min(beta, Game.maxValue(states + [branchState], depth - 1, player, alpha, beta), key=lambda x: x[1])
-                if beta[1] <= alpha[1]:
-                    return alpha
-        return beta
-    def minmax(state, depth, player, alpha, beta):
-        value = Game.maxValue([state], depth, player.name, alpha, beta)
-        return value[0]
-
 def proceniPotez(matrica,row,column,koIgra,potezi):
     # neprijateljIgra=not koIgra
     # neprijateljPotezi=moguciPotezi(matrica,neprijateljIgra,row,column)
