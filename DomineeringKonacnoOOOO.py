@@ -97,9 +97,6 @@ def kraj(brStanja,koIgra):
     return False
 
 def proceniPotez(matrica,row,column,koIgra,potezi):
-    # neprijateljIgra=not koIgra
-    # neprijateljPotezi=moguciPotezi(matrica,neprijateljIgra,row,column)
-    # procenjen=(len(potezi)-len(neprijateljPotezi) if koIgra==False else len(neprijateljPotezi)-len(potezi))
     procenjen=len(moguciPotezi(matrica,False,row,column))-len(moguciPotezi(matrica,True,row,column))
     return procenjen
 
