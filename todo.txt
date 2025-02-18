@@ -1,2 +1,4 @@
-[ ] drawTable method
-[ ] edit validPlayerMove method
+[ ] draw_table method redone possibly
+[ ] edit valid_moves method
+[ ] pack reduntant code into methods
+[ ] look closely at human vs computer and human vs human methods
