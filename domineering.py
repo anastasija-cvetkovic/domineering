@@ -1,28 +1,19 @@
-import copy
 import string
 
-# nismo izmenile, posle cemo
 def draw_table(m,n,matrix): 
-    slova=" "
-    razmak=" "
-    red=m
-    for l in range(n):
-       slova=slova + " " + (string.ascii_uppercase[l])
-    for v in range(2*m + 3): 
-        if(v == 0 or v==2*m+2):
-            print(razmak+slova)
-        elif(v >= 2 and v <= 2*m):
-            if(v%2 == 0):
-                print(str(red) +"||",end="")
-                for i in range(0,n):
-                   print(str(matrix[(v//2)-1][i])+"|",end="")
-                print("|"+ str(red))
-                red=red-1 
-            else:
-                print(razmak+" "+" -"*n)
-        elif(v == 1 or v == 2*m+1):
-            print(razmak+" " +" ="*n,end=" ")
-            print()
+    header = f"   {' '.join(string.ascii_uppercase[:n])}" 
+    equals_line = f"   {' '.join('=' * n)}"  #= = =
+    dash_line = f"   {' '.join('-' * n)}"    #- - -
+    print(header)
+    print(equals_line)
+    for row_num in range(m, 0, -1): 
+        matrix_row = m - row_num  
+        cells = [str(cell) for cell in matrix[matrix_row]] 
+        print(f" {row_num}ǁ{'|'.join(cells)}ǁ{row_num}")
+        if row_num > 1:
+            print(dash_line)
+    print(equals_line)
+    print(header)
 
 def valid_move(player_move,column,player,matrix):
     column_position =  player_move[1]
@@ -196,10 +187,10 @@ def play(mode,mode_computer,player,matrix,row,column,winner):
 
 def human_move(row,column,player,matrix):
     player_move = take_move(row,column)
-    valid = valid_move(player_move,row,column,player,matrix)
+    valid = valid_move(player_move,column,player,matrix)
     while(not valid):
         player_move = take_move(row,column)
-        valid = valid_move(player_move,row,column,player,matrix)
+        valid = valid_move(player_move,column,player,matrix)
     make_move(player_move,matrix,player)
     player = not player
     return player          

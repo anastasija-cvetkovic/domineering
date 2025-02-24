@@ -1,4 +1,4 @@
-[ ] draw_table method redone possibly
+[X] draw_table method redone 
 [ ] edit valid_moves method
-[ ] pack reduntant code into methods
+[ ] refactor code
 [ ] look closely at human vs computer and human vs human methods
