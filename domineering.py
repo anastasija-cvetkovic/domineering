@@ -180,7 +180,7 @@ def play(mode,mode_computer,player,matrix,row,column,winner):
             elif mode=="C":
                 if mode_computer == "C":
                     #human vs computer, computer is player X
-                    player=human_vs_computer(False,matrix,row,column,player)
+                    player = human_vs_computer(False,matrix,row,column,player)
                 elif mode_computer == "H":
                     #human vs computer, computer is player O
                     player = human_vs_computer(True,matrix,row,column,player)

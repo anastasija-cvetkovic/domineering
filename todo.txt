@@ -2,3 +2,8 @@
 [ ] edit valid_moves method
 [ ] refactor code
 [ ] look closely at human vs computer and human vs human methods
+
+uradile:
+board.py
+treba da se doradi:
+player.py
