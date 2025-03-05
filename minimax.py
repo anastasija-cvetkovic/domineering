@@ -5,7 +5,7 @@ from common import *
 def minimax_algorithm(board:Board,current_player:Player,player_moves,depth,alpha,beta):
     
     if depth == 0 or board.game_over(player_moves,current_player):
-        return board.evaluate_moves()
+        return [None,board.evaluate_moves()]
 
     best_move=[]
   
@@ -16,9 +16,9 @@ def minimax_algorithm(board:Board,current_player:Player,player_moves,depth,alpha
         # opponent is player O
         max_eval = NEGATIVE_INFINITY
         for node in player_moves:
-            children = board.calculate_possible_moves(board.matrix, opponent)  
+            children = board.calculate_possible_moves(opponent)  
             board.make_move(node, current_player)
-            evaluation = minimax_algorithm(board.matrix, opponent, children, depth - 1, alpha, beta)
+            evaluation = minimax_algorithm(board, opponent, children, depth - 1, alpha, beta)
             board.make_move(node, current_player, True) # undo move
             if(max_eval < evaluation[1]):
                 max_eval = evaluation[1]
@@ -32,9 +32,9 @@ def minimax_algorithm(board:Board,current_player:Player,player_moves,depth,alpha
         # opponent is player X
         min_eval = POSITIVE_INFINITY
         for node in player_moves:
-            children = board.calculate_possible_moves(board.matrix, opponent)
-            board.make_move(node, current_player, True)
-            evaluation = minimax_algorithm(board.matrix, opponent, children, depth - 1, alpha, beta)
+            children = board.calculate_possible_moves(opponent)
+            board.make_move(node, current_player)
+            evaluation = minimax_algorithm(board, opponent, children, depth - 1, alpha, beta)
             board.make_move(node, current_player, True) # undo move
             if(min_eval > evaluation[1]):
                 min_eval = evaluation[1]

@@ -24,56 +24,66 @@ class Board:
     print(equals_line)
     print(header)   
   
-  def valid_move(self,player_move,player:Player):
-    column_position =  player_move[1]
-    if(player == PLAYER_X):
-        row_position = player_move[0] 
-        if(row_position < 1 or self.matrix[row_position][column_position] != " "):
-            print("Invalid move")
+  def valid_move(self, player_move, player: Player):
+    row_position = player_move[0]
+    column_position = player_move[1]
+
+    if not (0 <= row_position < self.rows) or not (0 <= column_position < self.cols):
+        print("Invalid move: Position is out of bounds.")
+        return False
+
+    if player.marker == "X":
+        if row_position < 1:
+            print("Invalid move: Cannot place vertical domino in the first row.")
             return False
-        if(self.matrix[row_position - 1][column_position] != " "):
-            print("Invalid move")
+        if self.matrix[row_position][column_position] != " " or self.matrix[row_position - 1][column_position] != " ":
+            print("Invalid move: Cells are not empty.")
             return False
-        else:
-            print("Valid move")
-            return True
-    elif(player == PLAYER_O):
-        row_position = player_move[0]
-        if(column_position + 1 > self.cols - 1 or self.matrix[row_position][column_position] != " " ):
-            print("Invalid move")
+        return True
+
+    elif player.marker == "O":
+        if column_position >= self.cols - 1:
+            print("Invalid move: Cannot place horizontal domino in the last column.")
             return False
-        if(self.matrix[row_position][column_position + 1] != " "):
-            print("Invalid move")
+        if self.matrix[row_position][column_position] != " " or self.matrix[row_position][column_position + 1] != " ":
+            print("Invalid move: Cells are not empty.")
             return False
-        else:
-            print("Valid move")
-            return True
+        return True
+
+    return False  # Invalid player 
      
-  def make_move(self,player_move,player,undo=False):
+  def make_move(self, player_move, player, undo=False):
     move_row = player_move[0]
     move_column = player_move[1] 
-    if(player == PLAYER_X):
-        current_player = PLAYER_X if undo == False else " "
-        self.matrix[move_row][move_column] = current_player.marker
-        self.matrix[move_row - 1][move_column] = current_player.marker
-    elif(player == PLAYER_O):
-        current_player = PLAYER_O if undo == False else " "
-        self.matrix[move_row][move_column] = current_player.marker
-        self.matrix[move_row][move_column + 1] = current_player.marker
+
+    if undo:
+        marker = " "
+    else:
+        marker = str(player.marker)
+
+    if player.marker == "X":
+        # For PLAYER_X (vertical placement)
+        self.matrix[move_row][move_column] = marker
+        self.matrix[move_row - 1][move_column] = marker
+    elif player.marker == "O":
+        # For PLAYER_O (horizontal placement)
+        self.matrix[move_row][move_column] = marker
+        self.matrix[move_row][move_column + 1] = marker
 
   def calculate_possible_moves(self,player):
     result=[]
     for i in range(self.rows):
         for j in range(self.cols):
-            if((i > 0  if player == PLAYER_X else j < self.cols - 1) and self.matrix[i][j] == " " and self.matrix[i if player == PLAYER_O else i - 1][j if player == PLAYER_X else j + 1] == " "):
+            if((i > 0  if player.marker == "X" else j < self.cols - 1) and self.matrix[i][j] == " " and self.matrix[i if player.marker == "O" else i - 1][j if player.marker == "X" else j + 1] == " "):
                 result.append([i,j])
     return result
   
   def evaluate_moves(self):
-    evaluated = len(self.calculate_possible_moves(self.matrix,PLAYER_X)) - len(self.calculate_possible_moves(self.matrix,PLAYER_O))
+    evaluated = len(self.calculate_possible_moves(PLAYER_X)) - len(self.calculate_possible_moves(PLAYER_O))
     return evaluated
 
-  def game_over(moves_left,player):
+  def game_over(self, moves_left,player):
     if(not moves_left):
         print(f"{player.marker} player won!")
+        return True
     return False
