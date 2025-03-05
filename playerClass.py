@@ -1,5 +1,5 @@
-from board import Board
-import string
+from minimax import *
+from common import *
 
 class Player:
   def __init__(self, marker):
@@ -10,6 +10,8 @@ class Player:
 #isinstance(player,HumanPlayer)
 
 class HumanPlayer(Player):
+  from boardClass import Board
+
   def __init__(self,marker):
     super().__init__(self,marker) # super() <=> Player()
 
@@ -36,6 +38,22 @@ class HumanPlayer(Player):
       break 
     return [row_index,column_index]
 
+  def play(self, board):
+    player_move = self.take_move(board)
+    valid = board.valid_move(player_move, self)
+    while (not valid):
+       player_move = self.take_move(board)
+       valid = board.valid_move(player_move, self)
+    board.make_move(player_move, self)
+
 class ComputerPlayer(Player):
-  def __init__(self,marker):
-    super().__init__(self,marker)
+  def __init__(self, marker):
+    super().__init__(self, marker)
+
+  def play(self, board, alpha, beta, depth=4):
+    if self.marker == "X":
+      player_moves = board.calculate_possible_moves(self) 
+      picked_move = minimax_algorithm(board, self,player_moves, depth, NEGATIVE_INFINITY, POSITIVE_INFINITY)
+      print(picked_move)
+      board.make_move(picked_move[0],self)
+
