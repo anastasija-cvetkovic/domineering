@@ -1,5 +1,5 @@
 import string
-from playerClass import Player
+from base_player import Player
 from common import PLAYER_X,PLAYER_O
 
 class Board:

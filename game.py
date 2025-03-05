@@ -1,5 +1,5 @@
-from boardClass import *
-from playerClass import *
+from board import *
+from players import *
 from common import *
 
 def game_on(current_player,opponent, board:Board, winner):

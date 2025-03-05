@@ -1,4 +1,4 @@
-from playerClass import Player
+from base_player import Player
 
 PLAYER_X = Player("X")
 PLAYER_O = Player("O")

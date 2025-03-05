@@ -1,5 +1,5 @@
-from boardClass import *
-from playerClass import *
+from board import *
+from base_player import Player
 from common import *
 
 def minimax_algorithm(board:Board,current_player:Player,player_moves,depth,alpha,beta):

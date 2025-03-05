@@ -1,16 +1,11 @@
 from minimax import *
 from common import *
-
-class Player:
-  def __init__(self, marker):
-    self.marker = marker # X or O
-  # def take_move(self, board:Board) -> list[int,int]:
-  #   pass # method to be implemented by subclasses
+from base_player import *
+from board import Board
 
 #isinstance(player,HumanPlayer)
 
 class HumanPlayer(Player):
-  from boardClass import Board
 
   def __init__(self,marker):
     super().__init__(self,marker) # super() <=> Player()
@@ -51,9 +46,9 @@ class ComputerPlayer(Player):
     super().__init__(self, marker)
 
   def play(self, board, alpha, beta, depth=4):
-    if self.marker == "X":
-      player_moves = board.calculate_possible_moves(self) 
-      picked_move = minimax_algorithm(board, self,player_moves, depth, NEGATIVE_INFINITY, POSITIVE_INFINITY)
-      print(picked_move)
-      board.make_move(picked_move[0],self)
+    player_moves = board.calculate_possible_moves(self) 
+    picked_move = minimax_algorithm(board, self,player_moves, depth, NEGATIVE_INFINITY, POSITIVE_INFINITY)
+    print(picked_move)
+    board.make_move(picked_move[0],self)
+       
 
